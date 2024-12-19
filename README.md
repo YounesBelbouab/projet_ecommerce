@@ -49,12 +49,20 @@ En combinant ces technologies, on obtient une solution complète, fluide et évo
 
 ---
 
+### 5. Installation des dépendances
+
+Pour installer toutes les bibliothèques nécessaires à l'exécution de ce projet, vous pouvez utiliser la commande suivante :
+
+```
+pip install pymongo uvicorn pandas matplotlib seaborn streamlit fastapi
+```
+
+
+---
+
 ## Conclusion
 
 En résumé, nous avons choisi MongoDB pour sa flexibilité et sa scalabilité, FastAPI pour sa rapidité et sa documentation automatique, et Streamlit pour sa simplicité et son interactivité. Ces technologies se complètent parfaitement pour créer une solution moderne d’analyse et de visualisation de données, idéale pour un projet e-commerce.
 
 Nous vous remercions pour votre attention et nous sommes maintenant disponibles pour répondre à vos questions.
-
-
 ![image](https://github.com/user-attachments/assets/bb7a3842-3187-4f1b-ba6c-cfe69ccb4e1a)
-
