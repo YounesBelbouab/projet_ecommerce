@@ -55,6 +55,6 @@ En résumé, nous avons choisi MongoDB pour sa flexibilité et sa scalabilité, 
 
 Nous vous remercions pour votre attention et nous sommes maintenant disponibles pour répondre à vos questions.
 
-<p align="center">
-  ![image](https://github.com/user-attachments/assets/bb7a3842-3187-4f1b-ba6c-cfe69ccb4e1a)
-</p>
+
+![image](https://github.com/user-attachments/assets/bb7a3842-3187-4f1b-ba6c-cfe69ccb4e1a)
+
