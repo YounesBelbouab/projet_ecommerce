@@ -25,7 +25,10 @@ mongodb://localhost:27017
 
 Une fois l’installation terminée, assurez-vous que le service MongoDB est en cours d’exécution en lançant la commande suivante :
 
+```bash
 mongod
+```
+
 
 Cela permettra à MongoDB de démarrer et d'être prêt à recevoir vos connexions.
 
