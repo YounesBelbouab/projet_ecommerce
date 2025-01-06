@@ -29,7 +29,7 @@ Bonjour à tous, L’objectif de ce projet était de gérer les données efficac
 
 MongoDB est une base de données NoSQL, ce qui signifie qu'elle est parfaitement adaptée pour gérer des données semi-structurées, comme celles d’un site e-commerce. Dans ce projet, les données des produits, des clients et des commandes sont variées et peuvent évoluer avec le temps, ce qui fait de MongoDB un choix idéal.
 
-De plus, MongoDB permet d’effectuer des jointures complexes directement dans la base de données grâce à ses pipelines d’agrégation. Cela nous a permis de relier des informations, comme les commandes aux produits ou les clients à leurs commandes, afin de calculer des KPIs tels que les ventes par client ou par région, directement dans la base. Ce traitement de données est rapide et efficace.
+De plus, MongoDB permet d’effectuer des jointures complexes directement dans la base de données grâce à ses pipelines d’agrégation. Cela nous a permis de relier des informations, comme les commandes aux produits ou les clients à leurs commandes, afin de calculer des KPIs (Keys Performance indicator )tels que les ventes par client ou par région, directement dans la base. Ce traitement de données est rapide et efficace.
 
 Enfin, MongoDB est conçu pour être hautement scalable, c’est-à-dire qu’il peut facilement gérer un volume croissant de données. Cela est particulièrement important pour un projet comme le nôtre, qui peut évoluer et nécessiter le traitement de grandes quantités de données à mesure que le site se développe.
 
