@@ -3,6 +3,59 @@
   <strong>Analyse des ventes d'un site de ecommerce</strong>
 </p>
 
+# Guide d'installation et de lancement du projet
+
+## 1. Installation des dépendances
+
+Pour installer les bibliothèques nécessaires au projet, exécutez la commande suivante dans le terminal :
+
+```bash
+pip install pymongo uvicorn pandas matplotlib seaborn streamlit fastapi
+```
+
+---
+
+## 2. Lancement de MongoDB
+
+MongoDB est-il déjà installé sur votre machine ?
+Si ce n’est pas le cas, vous pouvez le télécharger et l’installer depuis MongoDB Community Edition.
+
+Par défaut, MongoDB s’exécutera sur l’adresse suivante :
+mongodb://localhost:27017
+
+Une fois l’installation terminée, assurez-vous que le service MongoDB est en cours d’exécution en lançant la commande suivante :
+
+mongod
+
+Cela permettra à MongoDB de démarrer et d'être prêt à recevoir vos connexions.
+
+---
+
+## 3. Lancement du backend avec FastAPI
+
+Pour exécuter le backend, utilisez la commande suivante :
+
+```bash
+uvicorn app:app --reload
+```
+
+Cela démarre le serveur FastAPI, qui sera accessible à l’adresse :
+[http://127.0.0.1:8000].
+
+---
+
+## 4. Lancement de l’interface Streamlit
+
+Exécutez la commande suivante pour lancer l’interface utilisateur :
+
+```bash
+streamlit run ./app.py
+```
+
+Desormais l’interface sera disponible dans votre navigateur.
+
+
+
 ## Introduction
 
 Bonjour à tous, L’objectif de ce projet était de gérer les données efficacement, de calculer des KPIs et de les présenter de manière claire et interactive grâce aux technologies MongoDB, FastAPI et Streamlit.
