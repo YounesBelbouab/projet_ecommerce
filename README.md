@@ -5,7 +5,7 @@
 
 ## Introduction
 
-Bonjour à tous, aujourd’hui, nous allons vous présenter le backend d’un projet d’analyse et de visualisation de données pour un site e-commerce. L’objectif de ce projet était de gérer les données efficacement, de calculer des KPIs et de les présenter de manière claire et interactive grâce aux technologies MongoDB, FastAPI et Streamlit.
+Bonjour à tous, L’objectif de ce projet était de gérer les données efficacement, de calculer des KPIs et de les présenter de manière claire et interactive grâce aux technologies MongoDB, FastAPI et Streamlit.
 
 ---
 
