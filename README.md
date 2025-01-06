@@ -12,12 +12,17 @@ Bonjour à tous, L’objectif de ce projet était de gérer les données efficac
 
 ## Backend:
 - FastApi
-- libraire python:
+- Libraire python:
        - Pandas
        - PyMongo
        - Request
-  MongoDB
+- MongoDB
   
+## Front:
+- FastApi
+- Libraire python:
+       - PlotlyExpress
+       - streamlit
   
 
 ### 1. Pourquoi MongoDB ?
