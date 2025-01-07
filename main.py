@@ -20,7 +20,8 @@ state_mapping = {
     "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT",
     "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
     "Wisconsin": "WI", "Wyoming": "WY"
-    }
+}
+
 
 @st.cache_data(ttl=300)
 def fetch_data(endpoint):
@@ -32,10 +33,13 @@ def fetch_data(endpoint):
         st.error(f"Erreur lors de la récupération des données : {e}")
         return None
 
+
 st.set_page_config(layout="wide")
 st.title("Dashboard des Ventes Ecommerce")
 
-page = st.sidebar.selectbox("Choisir une analyse", ["Analyse Générale","Analyse Produits", "Analyse par Ville", "Ventes par État", "Ventes par produit", "Ventes par Mois"])
+page = st.sidebar.selectbox("Choisir une analyse",
+                            ["Analyse Générale", "Analyse Produits", "Analyse par Ville", "Ventes par État",
+                             "Ventes par produit", "Ventes par Mois"])
 
 if page == "Analyse Produits":
     st.header("Analyse des Ventes par Produit")
@@ -45,7 +49,8 @@ if page == "Analyse Produits":
         df = pd.DataFrame(product_sales_data["sales_by_product"])
         if not df.empty:
 
-            fig = px.bar(df, x="_id", y="totalSales", title="Ventes par Produit", labels={"_id": "Nom du Produit", "totalSales": "Ventes Totales"})
+            fig = px.bar(df, x="_id", y="totalSales", title="Ventes par Produit",
+                         labels={"_id": "Nom du Produit", "totalSales": "Ventes Totales"})
             st.plotly_chart(fig)
 
             top_product = df.loc[df['totalSales'].idxmax()]
@@ -53,6 +58,14 @@ if page == "Analyse Produits":
 
             bottom_product = df.loc[df['totalSales'].idxmin()]
             st.write(f"Produit le moins vendu : {bottom_product['_id']} ({bottom_product['totalSales']:.2f} $)")
+
+            # Afficher uniquement les 5 produits les moins vendus
+            st.subheader("Top 5 des Produits les Moins Vendus")
+            bottom_5_products = df.nsmallest(5, "totalSales")
+            st.table(bottom_5_products[["_id", "totalSales"]])
+
+            # Nombre de produits différents
+            st.write(f"Nombre de produits différents : {len(df)}")
 
             st.subheader("Filtrer par Produit")
             selected_product = st.selectbox("Choisir un produit", options=df["_id"].unique())
@@ -105,7 +118,8 @@ elif page == "Analyse Générale":
     if ship_mode_data:
         df_ship_mode = pd.DataFrame(ship_mode_data["sales_by_ship_mode"])
         if not df_ship_mode.empty:
-            fig_ship_mode = px.pie(df_ship_mode, names="_id", values="totalSales", title="Répartition des Ventes par Mode de Livraison")
+            fig_ship_mode = px.pie(df_ship_mode, names="_id", values="totalSales",
+                                   title="Répartition des Ventes par Mode de Livraison")
             st.plotly_chart(fig_ship_mode)
         else:
             st.write("Aucune donnée disponible pour les modes de livraison.")
@@ -245,7 +259,8 @@ elif page == "Ventes par client":
 
         # Vérifier si le DataFrame n'est pas vide
         if not df.empty:
-            df = df.rename(columns={"_id": "Client ID", "customer_name": "Nom du client", "total_sales": "Ventes totales"})
+            df = df.rename(
+                columns={"_id": "Client ID", "customer_name": "Nom du client", "total_sales": "Ventes totales"})
             top_clients = df.nlargest(10, "Ventes totales")
             fig = px.bar(
                 top_clients,
@@ -260,7 +275,6 @@ elif page == "Ventes par client":
             st.warning("Aucune donnée disponible pour les ventes par client.")
     else:
         st.warning("Aucune donnée disponible ou erreur dans la récupération")
-
 
 if page == "Analyse Produits":
     st.header("Analyse des Ventes par Produit")
@@ -290,10 +304,6 @@ if page == "Analyse Produits":
                 labels={"category": "Catégorie", "total_sales": "Ventes Totales (en $)"},
             )
             st.plotly_chart(fig_pie)
-
-            # Produit le plus vendu
-            top_category = df.loc[df['total_sales'].idxmax()]
-            st.write(f"Catégorie la plus vendue : {top_category['category']} ({top_category['total_sales']:.2f} $)")
 
             # Produit le moins vendu
             bottom_category = df.loc[df['total_sales'].idxmin()]
