@@ -3,17 +3,89 @@
   <strong>Analyse des ventes d'un site de ecommerce</strong>
 </p>
 
-## Introduction
+# Guide d'installation et de lancement du projet
 
-Bonjour à tous, aujourd’hui, nous allons vous présenter le backend d’un projet d’analyse et de visualisation de données pour un site e-commerce. L’objectif de ce projet était de gérer les données efficacement, de calculer des KPIs et de les présenter de manière claire et interactive grâce aux technologies MongoDB, FastAPI et Streamlit.
+## 1. Installation des dépendances
+
+Pour installer les bibliothèques nécessaires au projet, exécutez la commande suivante dans le terminal :
+
+```bash
+pip install pymongo uvicorn pandas matplotlib seaborn streamlit fastapi
+```
 
 ---
+
+## 2. Lancement de MongoDB
+
+MongoDB est-il déjà installé sur votre machine ?
+Si ce n’est pas le cas, vous pouvez le télécharger et l’installer depuis MongoDB Community Edition.
+
+Par défaut, MongoDB s’exécutera sur l’adresse suivante :
+mongodb://localhost:27017
+
+Une fois l’installation terminée, assurez-vous que le service MongoDB est en cours d’exécution en lançant la commande suivante :
+
+```bash
+mongod
+```
+
+
+Cela permettra à MongoDB de démarrer et d'être prêt à recevoir vos connexions.
+
+---
+
+## 3. Lancement du backend avec FastAPI
+
+Pour exécuter le backend, utilisez la commande suivante :
+
+```bash
+uvicorn app:app --reload
+```
+
+Cela démarre le serveur FastAPI, qui sera accessible à l’adresse :
+[http://127.0.0.1:8000].
+
+---
+
+## 4. Lancement de l’interface Streamlit
+
+Exécutez la commande suivante pour lancer l’interface utilisateur :
+
+```bash
+streamlit run ./app.py
+```
+
+Desormais l’interface sera disponible dans votre navigateur.
+
+
+
+## Introduction
+
+Bonjour à tous, L’objectif de ce projet était de gérer les données efficacement, de calculer des KPIs et de les présenter de manière claire et interactive grâce aux technologies MongoDB, FastAPI et Streamlit.
+
+---
+### Technologie Utiliser ?
+
+## Backend:
+- FastApi
+- Libraire python:
+       - Pandas
+       - PyMongo
+       - Request
+- MongoDB
+  
+## Front:
+- FastApi
+- Libraire python:
+       - PlotlyExpress
+       - streamlit
+  
 
 ### 1. Pourquoi MongoDB ?
 
 MongoDB est une base de données NoSQL, ce qui signifie qu'elle est parfaitement adaptée pour gérer des données semi-structurées, comme celles d’un site e-commerce. Dans ce projet, les données des produits, des clients et des commandes sont variées et peuvent évoluer avec le temps, ce qui fait de MongoDB un choix idéal.
 
-De plus, MongoDB permet d’effectuer des jointures complexes directement dans la base de données grâce à ses pipelines d’agrégation. Cela nous a permis de relier des informations, comme les commandes aux produits ou les clients à leurs commandes, afin de calculer des KPIs tels que les ventes par client ou par région, directement dans la base. Ce traitement de données est rapide et efficace.
+De plus, MongoDB permet d’effectuer des jointures complexes directement dans la base de données grâce à ses pipelines d’agrégation. Cela nous a permis de relier des informations, comme les commandes aux produits ou les clients à leurs commandes, afin de calculer des KPIs (Keys Performance indicator )tels que les ventes par client ou par région, directement dans la base. Ce traitement de données est rapide et efficace.
 
 Enfin, MongoDB est conçu pour être hautement scalable, c’est-à-dire qu’il peut facilement gérer un volume croissant de données. Cela est particulièrement important pour un projet comme le nôtre, qui peut évoluer et nécessiter le traitement de grandes quantités de données à mesure que le site se développe.
 
@@ -49,12 +121,20 @@ En combinant ces technologies, on obtient une solution complète, fluide et évo
 
 ---
 
+### 5. Installation des dépendances
+
+Pour installer toutes les bibliothèques nécessaires à l'exécution de ce projet, vous pouvez utiliser la commande suivante :
+
+```
+pip install pymongo uvicorn pandas matplotlib seaborn streamlit fastapi
+```
+
+
+---
+
 ## Conclusion
 
 En résumé, nous avons choisi MongoDB pour sa flexibilité et sa scalabilité, FastAPI pour sa rapidité et sa documentation automatique, et Streamlit pour sa simplicité et son interactivité. Ces technologies se complètent parfaitement pour créer une solution moderne d’analyse et de visualisation de données, idéale pour un projet e-commerce.
 
 Nous vous remercions pour votre attention et nous sommes maintenant disponibles pour répondre à vos questions.
-
-
 ![image](https://github.com/user-attachments/assets/bb7a3842-3187-4f1b-ba6c-cfe69ccb4e1a)
-
