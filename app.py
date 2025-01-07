@@ -5,7 +5,7 @@ import uvicorn
 app = FastAPI()
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client['ecommerce']
+db = client['ecomerce']
 @app.get("/ecommerce/sales-by-city")
 async def get_sales_by_city():
     result = list(db['orders'].aggregate([
@@ -113,33 +113,37 @@ async def get_sales_by_state():
                 '_id': '$locationDetails.State',
                 'totalSales': {'$sum': '$Sales'}
             }
-        }
+        },
+        {'$sort': {'totalSales': -1}}
     ]))
     return {"sales_by_state": result}
 
 @app.get("/ecommerce/sales-by-customer")
 async def get_sales_by_customer():
-    result = list(db['orders'].aggregate([
+    result = list(db['Orders'].aggregate([
         {
             '$lookup': {
-                'from': 'customers',
+                'from': 'Customers',
                 'localField': 'Customer ID',
                 'foreignField': 'Customer ID',
                 'as': 'customerDetails'
             }
         },
+        {'$unwind': '$customerDetails'},
         {
             '$group': {
                 '_id': '$Customer ID',
+                'customer_name': {'$first': '$customerDetails.Customer Name'},
                 'total_sales': {'$sum': '$Sales'}
             }
-        }
+        },
+        {'$sort': {'total_sales': -1}}
     ]))
     return {"sales_by_customer": result}
 
 @app.get("/ecommerce/sales-by-post-code")
 async  def get_sales_by_post_code():
-    result = list(client['ecommerce']['orders'].aggregate([
+    result = list(client['ecomerce']['orders'].aggregate([
         {
             '$group': {
                 '_id': '$Postal Code',
@@ -157,7 +161,7 @@ async  def get_sales_by_post_code():
 
 @app.get("/ecommerce/average-cart")
 async def average_cart():
-    result = list(client['ecommerce']['orders'].aggregate([
+    result = list(client['ecomerce']['orders'].aggregate([
         {
             '$group': {
                 '_id': None,
@@ -182,7 +186,7 @@ async def average_cart():
 
 @app.get("/ecommerce/total-sales")
 async def totale_sales():
-    result = list(client['ecommerce']['orders'].aggregate([
+    result = list(client['ecomerce']['orders'].aggregate([
         {
             '$group': {
                 '_id': '$Product Category',
@@ -200,7 +204,7 @@ async def totale_sales():
 
 @app.get("/ecommerce/nombre-commande-moyenne-par-client")
 async def average_order_by_client():
-    result = list(client['ecommerce']['orders'].aggregate([
+    result = list(client['ecomerce']['orders'].aggregate([
         {
             '$group': {
                 '_id': '$Customer ID',
@@ -221,7 +225,7 @@ async def average_order_by_client():
 
 @app.get("/ecommerce/average-product-by-sales")
 async def average_product_by_sales():
-    result = list(client['ecommerce']['orders'].aggregate([
+    result = list(client['ecomerce']['orders'].aggregate([
         {
             '$group': {
                 '_id': None,
@@ -244,5 +248,75 @@ async def average_product_by_sales():
         }
     ]))
     return {"nombre de produit moyen par vente" : result}
+
+@app.get("/ecommerce/sales-by-category")
+async def get_sales_by_category():
+    pipeline = [
+        # Jointure entre orders et products sur le Product ID
+        {
+            "$lookup": {
+                "from": "products",
+                "localField": "Product ID",  # Champ dans 'orders'
+                "foreignField": "Product ID",  # Champ dans 'products'
+                "as": "productDetails"
+            }
+        },
+        {"$unwind": "$productDetails"},  # Décomparer le tableau résultant de la jointure
+        {
+            "$group": {
+                "_id": "$productDetails.Category",  # Grouper par catégorie de produit
+                "totalSales": {"$sum": "$Sales"},  # Somme des ventes par catégorie
+                "totalQuantity": {"$sum": "$Quantity"}  # Total des quantités vendues par catégorie
+            }
+        },
+        {"$sort": {"totalSales": -1}}  # Trier les résultats par les ventes totales décroissantes
+    ]
+
+    # Exécution de l'agrégation sur la collection orders
+    data = db['orders'].aggregate(pipeline)
+
+    # Formatage des résultats
+    result = [
+        {
+            "category": item["_id"],  # Nom de la catégorie
+            "total_sales": item["totalSales"],  # Ventes totales pour la catégorie
+            "total_quantity": item["totalQuantity"]  # Quantité totale vendue pour la catégorie
+        }
+        for item in data
+    ]
+
+    return {"sales_by_category": result}
+
+@app.get("/ecommerce/sales-by-date")
+async def get_sales_by_date():
+    # Pipeline d'agrégation simplifié
+    pipeline = [
+        {
+            "$group": {
+                "_id": "$Order Date",  # Utilisation de la date brute comme clé
+                "total_sales": {"$sum": "$Sales"},  # Somme des ventes
+                "total_orders": {"$sum": 1}  # Nombre total de commandes
+            }
+        },
+        {
+            "$sort": {"_id": 1}  # Tri par date croissante
+        }
+    ]
+
+    # Exécution du pipeline d'agrégation
+    data = db['orders'].aggregate(pipeline)
+
+    # Conversion des données en une liste formatée
+    result = [
+        {
+            "date": item["_id"],  # La date brute telle qu'elle est dans MongoDB
+            "total_sales": item.get("total_sales", 0),
+            "total_orders": item.get("total_orders", 0)
+        }
+        for item in data
+    ]
+
+    return {"sales_by_date": result}
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=9000)
+    uvicorn.run(app, host="0.0.0.0", port=9002)
